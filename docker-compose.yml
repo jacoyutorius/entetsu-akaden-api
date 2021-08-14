@@ -1,0 +1,14 @@
+version: "3.7"
+services:
+  app:
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - "80:80"
+    stdin_open: true
+    tty: true
+    command: bundle exec ruby app.rb
+    environment:
+      AWS_ACCESS_KEY_ID:
+      AWS_SECRET_ACCESS_KEY:
