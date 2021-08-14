@@ -10,7 +10,12 @@ set :allow_origin, '*'
 set :allow_methods, 'GET'
 set :allow_headers, 'content-type'
 
-client = Aws::DynamoDB::Client.new(region: 'ap-northeast-1')
+client_params = ENV['COPILOT_ENVIRONMENT_NAME'] ? { endpoint: 'http://localhost:8002' } : { region: 'ap-northeast-1' }
+client = Aws::DynamoDB::Client.new(client_params)
+
+def version
+  Time.now.localtime.year
+end
 
 get '/' do
   {
@@ -20,7 +25,7 @@ end
 
 get '/info/:station' do
   ret = client.execute_statement({
-    statement: "select * from Timetable where id='#{params[:station]}' and sk='info'"
+    statement: "select * from Timetable where id='#{params[:station]}' and sk='info' and version=#{version}"
   })
 
   record = ret.items.first
@@ -33,7 +38,7 @@ end
 
 get '/fare/:station/:to' do
   ret = client.execute_statement({
-    statement: "select * from Timetable where id='#{params[:station]}' and sk='#{params[:to]}'"
+    statement: "select * from Timetable where id='#{params[:station]}' and sk='#{params[:to]}' and version=#{version}"
   })
 
   record = ret.items.first
@@ -48,7 +53,7 @@ get '/timetables/:station/:detection/:week' do
   key = "#{params[:station]}-#{params[:detection]}-#{params[:week]}"
 
   ret = client.execute_statement({
-    statement: "select * from Timetable where id='#{key}'"
+    statement: "select * from Timetable where id='#{key}' and version=#{version}"
   })
 
   ret.items.map do |row|
@@ -56,7 +61,7 @@ get '/timetables/:station/:detection/:week' do
       version: row['version'].to_i,
       formation: row['formation'].to_i,
       detection: row['detection'],
-      sk: row['sk'],
+      time: row['sk'],
       type: row['type']
     }
   end.to_json
