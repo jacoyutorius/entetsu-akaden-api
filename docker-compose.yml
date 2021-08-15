@@ -12,3 +12,10 @@ services:
     environment:
       AWS_ACCESS_KEY_ID:
       AWS_SECRET_ACCESS_KEY:
+    links:
+      - dynamo-admin
+  dynamo-admin:
+    image: instructure/dynamo-local-admin
+    ports:
+        - '8000:8000'
+        - '8002:8002'

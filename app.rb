@@ -10,7 +10,8 @@ set :allow_origin, '*'
 set :allow_methods, 'GET'
 set :allow_headers, 'content-type'
 
-client_params = ENV['COPILOT_ENVIRONMENT_NAME'] ? { endpoint: 'http://localhost:8002' } : { region: 'ap-northeast-1' }
+client_params = { region: 'ap-northeast-1' }
+client_params[:endpoint] = 'http://dynamo-admin:8002' unless ENV.key?('COPILOT_ENVIRONMENT_NAME')
 client = Aws::DynamoDB::Client.new(client_params)
 
 def version
