@@ -18,6 +18,29 @@ def version
   Time.now.localtime.year
 end
 
+def stations
+  [
+    'shinhamamatsu',
+    'daiichi-dori',
+    'enshubyoin',
+    'hachiman',
+    'sukenobu',
+    'hikuma',
+    'kamijima',
+    'jidosyagakkomae',
+    'saginomiya',
+    'sekishi',
+    'nishigasaki',
+    'komatsu',
+    'hamakita',
+    'misonochuokoen',
+    'kobayashi',
+    'shibamoto',
+    'gansuiji',
+    'nishikajima'
+  ]
+end
+
 get '/' do
   {
     message: 'hello world!'
@@ -25,6 +48,8 @@ get '/' do
 end
 
 get '/info/:station' do
+  raise 'Station is not defined.' unless stations.include? params['station']
+
   ret = client.execute_statement({
     statement: "select * from Timetable where id='#{params[:station]}' and sk='info' and version=#{version}"
   })
@@ -38,6 +63,9 @@ get '/info/:station' do
 end
 
 get '/fare/:station/:to' do
+  raise 'Station is not defined.' unless stations.include? params['station']
+  raise 'Where to is not defined.' unless stations.include? params['to']
+
   ret = client.execute_statement({
     statement: "select * from Timetable where id='#{params[:station]}' and sk='#{params[:to]}' and version=#{version}"
   })
@@ -51,6 +79,11 @@ get '/fare/:station/:to' do
 end
 
 get '/timetables/:station/:detection/:week' do
+  pp stations.include? params['station']
+  raise 'Station is not defined.' unless stations.include? params['station']
+  raise 'Detection is not defined.' unless %w(upto downto).include? params['detection']
+  raise 'Weektype is not defined.' unless %w(weekday weekend).include? params['week']
+
   key = "#{params[:station]}-#{params[:detection]}-#{params[:week]}"
 
   ret = client.execute_statement({
@@ -66,4 +99,10 @@ get '/timetables/:station/:detection/:week' do
       type: row['type']
     }
   end.to_json
+end
+
+not_found do
+  <<~HTML
+    <h2>Not found</h2>
+  HTML
 end
