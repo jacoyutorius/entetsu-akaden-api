@@ -50,14 +50,15 @@ end
 get '/info/:station' do
   raise 'Station is not defined.' unless stations.include? params['station']
 
+  id = "#{params[:station]}-#{version}"
   ret = client.execute_statement({
-    statement: "select * from Timetable where id='#{params[:station]}' and sk='info' and version=#{version}"
+    statement: "select * from Timetable where id='#{id}' and sk='info'"
   })
 
   record = ret.items.first
 
   {
-    **record.except('sk'),
+    **record.except('id', 'sk'),
     version: record['version'].to_i
   }.to_json
 end
@@ -66,8 +67,9 @@ get '/fare/:station/:to' do
   raise 'Station is not defined.' unless stations.include? params['station']
   raise 'Where to is not defined.' unless stations.include? params['to']
 
+  id = "#{params[:station]}-#{version}"
   ret = client.execute_statement({
-    statement: "select * from Timetable where id='#{params[:station]}' and sk='#{params[:to]}' and version=#{version}"
+    statement: "select * from Timetable where id='#{id}' and sk='#{params[:to]}'"
   })
 
   record = ret.items.first
@@ -84,10 +86,9 @@ get '/timetables/:station/:detection/:week' do
   raise 'Detection is not defined.' unless %w(upto downto).include? params['detection']
   raise 'Weektype is not defined.' unless %w(weekday weekend).include? params['week']
 
-  key = "#{params[:station]}-#{params[:detection]}-#{params[:week]}"
-
+  key = "#{params[:station]}-#{params[:detection]}-#{params[:week]}-#{version}"
   ret = client.execute_statement({
-    statement: "select * from Timetable where id='#{key}' and version=#{version}"
+    statement: "select * from Timetable where id='#{key}'"
   })
 
   ret.items.map do |row|
