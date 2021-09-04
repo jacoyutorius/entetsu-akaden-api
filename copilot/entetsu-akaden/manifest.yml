@@ -21,6 +21,9 @@ image:
 #     unhealthy_threshold: 5
 #     interval: 10s
 #     timeout: 5s
+http:
+  path: '/'
+  alias: akaden.jacoyutorius.net
 
 # Number of CPU units for the task.
 cpu: 1024
