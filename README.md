@@ -6,9 +6,9 @@
 
 |param|description||
 |:-|:-|:-|
-|station|駅ID|必須|
+|station|駅コード|必須|
 
-https://kri4wdscma.ap-northeast-1.awsapprunner.com/info/sukenobu
+https://akaden.jacoyutorius.net/info/sukenobu
 ```
 {
   staff: true,
@@ -37,11 +37,11 @@ https://kri4wdscma.ap-northeast-1.awsapprunner.com/info/sukenobu
 
 |param|description||
 |:-|:-|:-|
-|station|駅ID|必須|
+|station|駅コード|必須|
 |detection|進行方向。上り(upto)、下り(downto)|必須|
 |week|平日(weekday)または土日祝(weekend)|必須|
 
-https://kri4wdscma.ap-northeast-1.awsapprunner.com/timetables/hachiman/upto/weekday
+https://akaden.jacoyutorius.net/timetables/hachiman/upto/weekday
 ```
 [
   {
@@ -73,10 +73,10 @@ https://kri4wdscma.ap-northeast-1.awsapprunner.com/timetables/hachiman/upto/week
 
 |param|description||
 |:-|:-|:-|
-|station|駅ID|必須|
-|to|駅ID|必須|
+|station|駅コード|必須|
+|to|駅コード|必須|
 
-https://kri4wdscma.ap-northeast-1.awsapprunner.com/fare/sukenobu/hamakita
+https://akaden.jacoyutorius.net/fare/sukenobu/hamakita
 
 ```
 {
@@ -86,8 +86,30 @@ https://kri4wdscma.ap-northeast-1.awsapprunner.com/fare/sukenobu/hamakita
   fare_child: "140円"
 }
 ```
+## 駅コード
 
---
+|駅コード|駅名|
+|:-|:-|
+|shinhamamatsu|新浜松|
+|daiichi-dori|第一通り|
+|enshubyoin|遠州病院|
+|hachiman|八幡|
+|sukenobu|助信|
+|hikuma|曳馬|
+|kamijima|上島|
+|jidosyagakkomae|自動車学校前|
+|saginomiya|さぎの宮|
+|sekishi|積志|
+|nishigasaki|西ヶ崎|
+|komatsu|小松|
+|hamakita|浜北|
+|misonochuokoen|美薗中央公園|
+|kobayashi|小林|
+|shibamoto|芝本|
+|gansuiji|岩水寺|
+|nishikajima|西鹿島|
+
+---
 
 # usage
 
