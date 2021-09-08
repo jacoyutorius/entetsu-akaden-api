@@ -6,6 +6,6 @@ COPY Gemfile* ./
 COPY app.rb ./
 RUN bundle install
 
-EXPOSE 80
+EXPOSE 4567
 
 CMD ["bundle", "exec", "ruby", "app.rb"]

@@ -5,7 +5,7 @@ services:
     volumes:
       - .:/app
     ports:
-      - "80:80"
+      - "4567:4567"
     stdin_open: true
     tty: true
     command: bundle exec ruby app.rb

@@ -5,7 +5,6 @@ require 'sinatra/cors'
 require 'json'
 
 set :bind, '0.0.0.0'
-set :port, 80
 set :allow_origin, '*'
 set :allow_methods, 'GET'
 set :allow_headers, 'content-type'
