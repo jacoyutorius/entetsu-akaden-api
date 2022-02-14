@@ -132,3 +132,26 @@ docker-compose up -d
 ```
 copilot init
 ```
+
+## サービスの一時停止
+
+```
+$ copilot svc pause
+Found only one deployed service entetsu-akaden in environment test
+Sure? Yes
+Note: Your service will be unavailable while paused. You can resume the service once the pause operation is complete.
+✔ Paused service entetsu-akaden in environment test..
+Recommended follow-up action:
+    Run `copilot svc resume -n entetsu-akaden` to start processing requests again.
+```
+
+## サービスの削除
+
+*2022-02-15サービス停止済*
+
+```
+$ copilot app delete
+Sure? Yes
+✘ Failed to delete service entetsu-akaden from environment test: wait until stack entetsu-akaden-test-entetsu-akaden delete is complete: ResourceNotReady: failed waiting for successful resource state.
+✘ execute svc delete: delete service: wait until stack entetsu-akaden-test-entetsu-akaden delete is complete: ResourceNotReady: failed waiting for successful resource state
+```
